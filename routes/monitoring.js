@@ -11,7 +11,9 @@ router.get('/display', async (req, res, next) => {
     try {
         const value = await Monitoring.find()
         res.json(value);
+        console.log('isok bosq');
     } catch (e) {
+        console.log('error bosq');
         next(e)
     }
 })
