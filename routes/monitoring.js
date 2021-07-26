@@ -1,19 +1,19 @@
 const router = require('express').Router();
 let Monitoring = require('../models/monitoring.model');
 
-router.route('/display').get((req, res) => {
+router.route('/display').get(async (req, res) => {
     await Monitoring.find()
         .then(monitoring => res.json(monitoring))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/display/today').get((req, res) => {
+router.route('/display/today').get(async (req, res) => {
     await Monitoring.find({}, { _id: 0, value: 1 }).limit(1).sort({$natural:-1})
         .then(monitoring => res.json(monitoring))
         .catch(err => res.status(400).json('Error: ' + err));
 })
 
-router.route('/display/week').get((req, res) => {
+router.route('/display/week').get(async (req, res) => {
     await Monitoring.aggregate([
         { 
             $match: { 
@@ -46,7 +46,7 @@ router.route('/display/week').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
-router.route('/add').post((req, res) => {
+router.route('/add').post(async (req, res) => {
     const nama = req.body.nama;
     const alamat = req.body.alamat;
     const id = req.body.id;
