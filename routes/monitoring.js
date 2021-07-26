@@ -11,6 +11,16 @@ router.get('/display', (req, res) => {
     });
 });
 
+router.get('/display/today', (req, res) => {
+    Monitoring.find({}, { _id: 0, value: 1 }).limit(1).sort({$natural:-1}, (err, result) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(result);
+        }
+    });
+});
+
 // router.route('/display').get(async (req, res) => {
 //     await Monitoring.find()
 //         .then(monitoring => res.json(monitoring))
