@@ -2,19 +2,19 @@ const router = require('express').Router();
 let Monitoring = require('../models/monitoring.model');
 
 router.route('/display').get((req, res) => {
-    Monitoring.find()
+    await Monitoring.find()
         .then(monitoring => res.json(monitoring))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/display/today').get((req, res) => {
-    Monitoring.find({}, { _id: 0, value: 1 }).limit(1).sort({$natural:-1})
+    await Monitoring.find({}, { _id: 0, value: 1 }).limit(1).sort({$natural:-1})
         .then(monitoring => res.json(monitoring))
         .catch(err => res.status(400).json('Error: ' + err));
 })
 
 router.route('/display/week').get((req, res) => {
-    Monitoring.aggregate([
+    await Monitoring.aggregate([
         { 
             $match: { 
                 date: { 
